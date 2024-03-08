@@ -1,22 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minitalk.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/08 17:43:19 by cassassa          #+#    #+#             */
+/*   Updated: 2024/03/08 18:28:24 by cassassa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINITALK_H
 # define MINITALK_H
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <signal.h>
+# include <signal.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
+# define PID_MAX 99998
 
-typedef struct s_info
+typedef struct info
 {
-	int		index;
-	unsigned char cha;
-	char	str[4096];
-	int flag;
-	int c_pide;
-}		t_info;
-void			ft_putnbr_fd(int n, int fd);
-int		ft_atoi(const char *str);
-void	ft_putstr_fd(char *s, int fd);
-void	ft_putchar_fd(char c, int fd);
+	int		i;
+	char	c;
+}			t_init;
+
+void		ft_putnbr(int nb);
+int			ft_atoi(const char *str);
+void		ft_putstr(char *s);
+void		ft_putchar(char c);
 #endif

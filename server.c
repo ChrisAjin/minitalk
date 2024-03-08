@@ -1,68 +1,58 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/08 17:43:21 by cassassa          #+#    #+#             */
+/*   Updated: 2024/03/08 18:29:51 by cassassa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minitalk.h"
 
-t_info info;
+t_init	t;
 
-void	inv_bin_conv(int x)
+void	init_by_zero(void)
 {
-	unsigned char bit;
+	t.c = (char)255;
+	t.i = 0;
+}
+void	signal_handler(int signum, siginfo_t *info, void *sheet)
+{
+	int static	pid;
 
-	bit = 0b10000000;
-	if (x == SIGUSR2)
-		info.index++;
-	if (x == SIGUSR1)
+	(void)sheet;
+	if (pid != info->si_pid)
 	{
-		bit = bit >> info.index;
-		info.cha = info.cha | bit ;
-		info.index++;
+		pid = info->si_pid;
+		init_by_zero();
+	}
+	if (signum == SIGUSR1)
+		t.c |= (0x80 >> t.i++);
+	else if (signum == SIGUSR2)
+		t.c ^= (0x80 >> t.i++);
+	if (t.i == 8)
+	{
+		ft_putchar(t.c);
+		init_by_zero();
 	}
 }
 
-void	tr_msg(t_info *info)
+int	main(void)
 {
-	int i;
+	struct sigaction	sa;
+	pid_t				pid;
 
-	pause();
-	if (info->index == 8)
-	{
-		i = 0;
-		while (info->str[i] != 0)
-			i++;
-		info->str[i] = info->cha;
-		if (info->cha == '\0')
-		{
-			ft_putstr_fd(info->str,1);
-			ft_putchar_fd('\n',1);
-			i = 0;
-			while ( i < 4096)
-			{
-				info->str[i] = 0;
-				i++;
-			}
-		}
-		info->index = 0;
-		info->cha = 0;
-	}
-}
-
-int main(void)
-{
-	pid_t pid;
-	int i;
-
-	info.index = 0;
-	info.cha = 0;
-	i = 0;
-	while (i < 4096)
-	{
-		info.str[i] = 0;
-		i++;
-	}
+	sa.sa_sigaction = &signal_handler;
+	sa.sa_flags = SA_SIGINFO;
 	pid = getpid();
-	ft_putnbr_fd(pid,1);
-	ft_putchar_fd('\n', 1);
-	signal(SIGUSR1, inv_bin_conv);
-	signal(SIGUSR2, inv_bin_conv);
+	ft_putnbr(pid);
+	write(1, "\n", 1);
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 	while (1)
-		tr_msg(&info);
+		pause();
 	return (0);
 }
