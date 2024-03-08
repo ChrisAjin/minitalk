@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:43:21 by cassassa          #+#    #+#             */
-/*   Updated: 2024/03/08 18:29:51 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/03/08 18:49:28 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	init_by_zero(void)
 	t.c = (char)255;
 	t.i = 0;
 }
+
 void	signal_handler(int signum, siginfo_t *info, void *sheet)
 {
 	int static	pid;
