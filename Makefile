@@ -1,5 +1,5 @@
 CC	= gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g3
 RM	= rm -f
 
 CLIENT = client
@@ -7,8 +7,13 @@ SERVER = server
 
 SRCS_C = client.c tools.c
 SRCS_S = server.c tools.c
+SRCS_C_B = client_bonus.c tools_bonus.c
+SRCS_S_B = server_bonus.c tools_bonus.c
+
 OBJSC = $(SRCS_C:.c=.o)
 OBJSS = $(SRCS_S:.c=.o)
+OBJSC_B = $(SRCS_C_B:.c=.o)
+OBJSS_B = $(SRCS_S_B:.c=.o)
 
 all: $(CLIENT) $(SERVER)
 
@@ -18,10 +23,16 @@ $(CLIENT) :
 $(SERVER) :
 	@$(CC) $(SRCS_S) $(FLAGS) -o $(SERVER)
 
+bonus:
+	@$(CC) $(SRCS_C_B) $(FLAGS) -o $(CLIENT)
+	@$(CC) $(SRCS_S_B) $(FLAGS) -o $(SERVER)
+
 clean:
 	@$(RM) $(OBJS_C)
 	@$(RM) $(OBJS_S)
-	@echo "clean"
+	@$(RM) $(OBJSC_B)
+	@$(RM) $(OBJSS_B)
+	@echo "cleaned"
 
 fclean: clean
 	 	@$(RM) $(CLIENT)
@@ -32,6 +43,6 @@ re: fclean all
 so:	re
 	@$(RM) $(OBJS_C)
 	@$(RM) $(OBJS_S)
-	@echo "Ouais"
+	@echo "make re"
 
-.PHONY:		all clean fclean re so
+.PHONY:		all bonus clean fclean re so

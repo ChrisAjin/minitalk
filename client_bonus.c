@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:43:24 by cassassa          #+#    #+#             */
-/*   Updated: 2024/03/12 15:52:06 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:06:41 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
-static void	send_bit(int pid, char c)
+void	handler(int signum)
+{
+	if (signum == SIGUSR1)
+		write(1, "message recu\n", 14);
+}
+
+void	send_character(char c, int pid)
 {
 	int	shift;
 
@@ -29,12 +35,21 @@ static void	send_bit(int pid, char c)
 
 int	main(int argc, char **argv)
 {
+	int	i;
 	int	pid;
 
-	pid = atoi(argv[1]);
-	if (!(argc == 3 && pid > 0 && pid <= PID_MAX))
-		return (write(1, "Invalide argument!!\n", 20));
-	while (*argv[2])
-		send_bit(pid, *argv[2]++);
+	i = -1;
+	signal(SIGUSR1, &handler);
+	if (argc == 3)
+	{
+		pid = ft_atoi(argv[1]);
+		if (!(argc == 3 && pid > 0 && pid <= PID_MAX))
+			return (write(1, "Invalide PID!!\n", 15));
+		while (argv[2][++i])
+			send_character(argv[2][i], pid);
+		send_character('\0', pid);
+	}
+	else
+		write(1, "invalide argument!!\n", 20);
 	return (0);
 }
