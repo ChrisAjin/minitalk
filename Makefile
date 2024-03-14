@@ -1,5 +1,5 @@
 CC	= gcc
-FLAGS = -Wall -Wextra -Werror -g3
+FLAGS = -Wall -Wextra -Werror
 RM	= rm -f
 
 CLIENT = client

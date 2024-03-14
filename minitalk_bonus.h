@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:43:19 by cassassa          #+#    #+#             */
-/*   Updated: 2024/03/12 17:02:27 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:50:17 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define PID_MAX 99998
+# define PID_MAX 4194304
 
 typedef struct info
 {

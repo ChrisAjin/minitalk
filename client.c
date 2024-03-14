@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:43:24 by cassassa          #+#    #+#             */
-/*   Updated: 2024/03/12 15:52:06 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:02:16 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ int	main(int argc, char **argv)
 {
 	int	pid;
 
+	pid = 1;
+	if (!(argc == 3))
+		return (write(1, "Invalide argument!!\n", 20));
 	pid = atoi(argv[1]);
-	if (!(argc == 3 && pid > 0 && pid <= PID_MAX))
+	if (!(pid > 0 && pid <= PID_MAX))
 		return (write(1, "Invalide argument!!\n", 20));
 	while (*argv[2])
 		send_bit(pid, *argv[2]++);

@@ -6,7 +6,7 @@
 /*   By: cassassa <cassassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:43:21 by cassassa          #+#    #+#             */
-/*   Updated: 2024/03/08 18:49:28 by cassassa         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:45:31 by cassassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init_by_zero(void)
 
 void	signal_handler(int signum, siginfo_t *info, void *sheet)
 {
-	int static	pid;
+	static int	pid;
 
 	(void)sheet;
 	if (pid != info->si_pid)
